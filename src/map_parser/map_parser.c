@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:16:58 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/09 17:46:04 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:10:11 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,40 +34,98 @@ int	check_name(char *name)
 	return (0);
 }
 
-int	check_line(char *line)
+int	add_texture(char *line, t_cub *cub, int *var, int type)
 {
-	if (!line)
-		return (-1);
-	if (!ft_strlen(line))
+	if (cub->walls[type])
 	{
-		free(line);
-		return (0);
+		printf("Error\nDuplicated texture: %s\n", line);
+		return (1);
 	}
+	// Maybe check here if textures have a valid path
+	cub->walls[type] = ft_strdup(line + 3);
+	*var--;
+	free(line);
+	return (0);
+}
+
+int	get_color(char **rgb, t_cub *cub, int *var, int type)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	// NEED TO ADD ATOI
+	r = ft_atoi(rgb[0]);
+	g = ft_atoi(rgb[1]);
+	b = ft_atoi(rgb[2]);
+	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0)
+	{
+		printf("Error\nRBG color values need to be >= 0 && <= 255");
+		free_matrix(rgb);//TO DO
+		return (1);
+	}
+	cub->color[type] = r << 16 + g << 8 + b;
+	var--;
+	return (0);
+}
+
+int	add_fc(char *line, t_cub *cub, int *var, int type)
+{
+	char	**rgb;
+	int		i;
+
+	i = 0;
+	if (cub->color[type] != -1)
+	{
+		printf("Error\nDuplicated color: %s\n", line);
+		return (1);
+	}
+	rgb = ft_split(line + 2, ','); //NEED TO ADD SPLIT
+	while (rgb[i])
+		i++;
+	if (i != 3)
+	{
+		printf("Error\nInvalid color format: %s", line + 2);
+		return (1);
+	}
+	return (get_color(rgb, cub, var, type));
+}
+
+int	check_for_var(char *line, t_cub *cub, int *var)
+{
+	if (!ft_strlen(line))
+		return (0);
+	if (check_equal(line, "NO "))
+		return (add_texture(line, cub, var, C_NO));
+	if (check_equal(line, "SO "))
+		return (add_texture(line, cub, var, C_EA));
+	if (check_equal(line, "WE "))
+		return (add_texture(line, cub, var, C_SO));
+	if (check_equal(line, "EA "))
+		return (add_texture(line, cub, var, C_WE));
+	if (check_equal(line, "F "))
+		return (add_fc(line, cub, var, FLOOR));
+	if (check_equal(line, "C "))
+		return (add_fc(line, cub, var, CEILING));
 	return (1);
 }
 
-int	parse_variables(char *name, t_cub *cub)
+int	parse_variables(char *name, t_cub *cub, int var)
 {
 	char	*line;
 	int		fd;
 	int		i;
+	int		check;
 
+	i = 0;
 	fd = open(name, O_RDONLY);
-	line = get_map(fd);
-	if (check_line(line) == -1)
+	while (var)
 	{
-		printf("Error\n\"%s\" is not a correct map. Stopped at line %d\n", name, i);
-		return (1);
+		line = get_map(fd);
+		i++;
+		if (!line || check_for_var(line, cub, &var))
+			return (1);
 	}
-	if (check_line(line))
-		;
-	
-	//NEED TO CHECK IF LINE IS VARIABLE
-	while (line)
-	{
-		
-	}
-	return (0);
 }
 
 int	parse_map(int ac, char **av, t_cub *cub)
@@ -78,7 +136,7 @@ int	parse_map(int ac, char **av, t_cub *cub)
 		return (1);
 	}
 	init_cub(cub);
-	if (check_name(av[1]) || parse_variables(av[1], cub))
+	if (check_name(av[1]) || parse_variables(av[1], cub, 6))
 		return (1);
 	return (0);
 }

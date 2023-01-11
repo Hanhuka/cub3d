@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/09 17:01:39 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:52:35 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ typedef struct s_cub {
 
 //map_parser.c
 int		check_name(char *name);
-int		parse_variables(char *name, t_cub *cub);
+int		parse_variables(char *name, t_cub *cub, int var);
 int		parse_map(int ac, char **av, t_cub *cub);
 
 //map_parser_utils.c
 int		has_char(char *str, char c);
 char	*get_map(int fd);
 void	init_cub(t_cub *cub);
+char	*ft_strdup(char *str);
+int		check_equal(char *line, char *test);
 
 #endif 
