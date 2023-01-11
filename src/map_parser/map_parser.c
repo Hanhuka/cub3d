@@ -88,6 +88,7 @@ int	add_fc(char *line, t_cub *cub, int *var, int type)
 		printf("Error\nInvalid color format: %s", line + 2);
 		return (1);
 	}
+	free(line);
 	return (get_color(rgb, cub, var, type));
 }
 
