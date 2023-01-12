@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/11 21:12:01 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/12 15:18:32 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ typedef struct s_cub {
 }	t_cub;
 
 //map_parser.c
-int		check_name(char *name);
-int		parse_variables(char *name, t_cub *cub, int var);
-int		parse_map(int ac, char **av, t_cub *cub);
+int			get_color(char **rgb, t_cub *cub, int *var, int type);
+int			add_fc(char *line, t_cub *cub, int *var, int type);
+int			check_for_var(char *line, t_cub *cub, int *var);
+int			parse_variables(t_cub *cub, int var, int fd);
+int			parse_file(int ac, char **av, t_cub *cub);
+
+//map_parser.c
+int			check_name(char *name);
+int			add_texture(char *line, t_cub *cub, int *var, int type);
 
 //map_parser_utils.c
 int			has_char(char *str, char c);
@@ -50,4 +56,8 @@ char		*ft_substr(char const *str, int start, int end);
 char		**ft_split(char const *str, char c);
 long int	ft_atoi(const char *str);
 void		free_matrix(char **matrix);
+
+//map_parser_utils2.c
+int			parse_error(char *line, t_cub *cub, char *msg);
+
 #endif 

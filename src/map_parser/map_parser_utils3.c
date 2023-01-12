@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   map_parser_utils3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 15:20:45 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 15:29:32 by ralves-g         ###   ########.fr       */
+/*   Created: 2023/01/12 14:57:01 by ralves-g          #+#    #+#             */
+/*   Updated: 2023/01/12 15:10:39 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
-int	main(int ac, char **av)
+int	parse_error(char *line, t_cub *cub, char *msg)
 {
-	t_cub	cub;
+	int	i;
 
-	if (parse_file(ac, av, &cub))
-		return (1);
-	printf("Ceiling color: %d\nFloor color: %d", cub.color[CEILING], cub.color[FLOOR]);
-	// for (int i = 0; i < 4; i++)
-	// {
-	// 	if (cub.walls[i])
-	// 		free(cub.walls[i]);
-	// }
+	if (line)
+		free(line);
+	i = -1;
+	while (++i < 4)
+		if (cub->walls[i])
+			free(cub->walls[i]);
+	if (msg)
+		printf("%s", msg);
+	return (1);
 }
