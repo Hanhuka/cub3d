@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/11 18:52:35 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:12:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,15 @@ int		parse_variables(char *name, t_cub *cub, int var);
 int		parse_map(int ac, char **av, t_cub *cub);
 
 //map_parser_utils.c
-int		has_char(char *str, char c);
-char	*get_map(int fd);
-void	init_cub(t_cub *cub);
-char	*ft_strdup(char *str);
-int		check_equal(char *line, char *test);
+int			has_char(char *str, char c);
+char		*get_map(int fd);
+void		init_cub(t_cub *cub);
+char		*ft_strdup(char *str);
+int			check_equal(char *line, char *test);
 
+//map_parser_utils2.c
+char		*ft_substr(char const *str, int start, int end);
+char		**ft_split(char const *str, char c);
+long int	ft_atoi(const char *str);
+void		free_matrix(char **matrix);
 #endif 

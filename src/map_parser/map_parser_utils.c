@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:59:13 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/11 18:53:00 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:12:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ char	*get_map(int fd)
 	len = ft_strlen(line);
 	no_nl = malloc(sizeof(char) * len);
 	i = 0;
-	while (i <= len)
+	while (i < len)
 	{
 		if (line[i] == '\n')
 			no_nl[i] = 0;
 		else
 			no_nl[i] = line[i];
+		i++;
 	}
 	free(line);
 	return (no_nl);

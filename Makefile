@@ -21,7 +21,9 @@ INCLUDE		=	-I ./
 SRCS_		=	cub3d.c \
 				get_next_line.c \
 				get_next_line_utils.c \
-				map_parser/map_parser.c
+				map_parser/map_parser.c \
+				map_parser/map_parser_utils.c \
+				map_parser/map_parser_utils2.c
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
 
