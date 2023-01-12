@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 15:18:32 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:20:47 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@
 # define C_WE 3
 
 typedef struct s_cub {
-	char	*walls[4];
-	int		color[2];
-	int		play_x;
-	int		play_y;
-	char	**map;
+	char				*walls[4];
+	unsigned int		color[2];
+	int					color_check[2];
+	int					check_f;
+	int					play_x;
+	int					play_y;
+	char				**map;
 }	t_cub;
 
 //map_parser.c

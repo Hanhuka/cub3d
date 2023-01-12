@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:16:58 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 15:24:10 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:31:14 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	get_color(char **rgb, t_cub *cub, int *var, int type)
 		free_matrix(rgb);
 		return (1);
 	}
+	cub->color_check[type] = 1;
 	cub->color[type] = (r << 16) + (g << 8) + b;
+	printf("Color: R:%d G:%d B:%d UINT: %d\n",r, g, b, (r << 16) + (g << 8) + b);
 	*var -= 1;
 	free_matrix(rgb);
 	return (0);
@@ -39,14 +41,17 @@ int	add_fc(char *line, t_cub *cub, int *var, int type)
 	int		i;
 
 	i = 0;
-	if (cub->color[type] != -1)
+	if (cub->color_check[type])
 	{
 		printf("Error\nDuplicated color: \"%s\"\n", line);
 		return (1);
 	}
 	rgb = ft_split(line + 2, ',');
 	while (rgb[i])
+	{
+		printf("rgb = %s\n", rgb[i]);
 		i++;
+	}
 	if (i != 3)
 	{
 		printf("Error\nInvalid color format: \"%s\"", line + 2);

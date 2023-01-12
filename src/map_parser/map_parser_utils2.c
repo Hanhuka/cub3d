@@ -58,6 +58,7 @@ char	**ft_split(char const *str, char c)
 
 	i = 0;
 	i2 = 0;
+	printf("SPLIT STRING = %s\n", str);
 	split = malloc(sizeof(char *) * num_splits(str, c));
 	while (str[i] && str[i] == c)
 		i++;
@@ -83,6 +84,8 @@ long int	ft_atoi(const char *str)
 	long int	i;
 	long int	num;
 	long int	neg;
+
+	printf("Atoi string %s\n", str);
 
 	num = 0;
 	neg = 1;

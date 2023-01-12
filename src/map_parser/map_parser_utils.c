@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:59:13 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/11 23:12:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/12 16:21:35 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*get_map(int fd)
 
 void	init_cub(t_cub *cub)
 {
-	cub->color[FLOOR] = -1;
-	cub->color[CEILING] = -1;
+	cub->color_check[FLOOR] = 0;
+	cub->color_check[CEILING] = 0;
 	cub->walls[C_NO] = NULL;
 	cub->walls[C_EA] = NULL;
 	cub->walls[C_SO] = NULL;
