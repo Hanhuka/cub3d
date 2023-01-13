@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:13:20 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 15:08:40 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/12 23:09:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ int	check_name(char *name)
 
 int	add_texture(char *line, t_cub *cub, int *var, int type)
 {
-	int	i;
-
-	i = -1;
 	if (cub->walls[type])
 	{
 		printf("Error\nDuplicated texture: \"%s\"\n", line);

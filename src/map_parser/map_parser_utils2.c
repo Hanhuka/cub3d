@@ -58,7 +58,6 @@ char	**ft_split(char const *str, char c)
 
 	i = 0;
 	i2 = 0;
-	printf("SPLIT STRING = %s\n", str);
 	split = malloc(sizeof(char *) * num_splits(str, c));
 	while (str[i] && str[i] == c)
 		i++;
@@ -67,7 +66,7 @@ char	**ft_split(char const *str, char c)
 		if (str[i] && str[i] != c && (!str[i + 1] || (str[i + 1]
 					&& str[i + 1] == c)))
 		{
-			start = i - 1;
+			start = i;
 			while (!(str[start] && str[start] != c && (start == 0
 						|| str[start - 1] == c)))
 				start--;
