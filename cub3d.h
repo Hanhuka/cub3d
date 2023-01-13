@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 16:20:47 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:58:49 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cub {
 int			get_color(char **rgb, t_cub *cub, int *var, int type);
 int			add_fc(char *line, t_cub *cub, int *var, int type);
 int			check_for_var(char *line, t_cub *cub, int *var);
-int			parse_variables(t_cub *cub, int var, int fd);
+int			parse_vars(t_cub *cub, int var, int fd, int *count);
 int			parse_file(int ac, char **av, t_cub *cub);
 
 //map_parser.c

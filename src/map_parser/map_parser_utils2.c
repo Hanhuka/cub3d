@@ -84,8 +84,6 @@ long int	ft_atoi(const char *str)
 	long int	num;
 	long int	neg;
 
-	printf("Atoi string %s\n", str);
-
 	num = 0;
 	neg = 1;
 	i = 0;

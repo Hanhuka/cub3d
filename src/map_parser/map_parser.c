@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:16:58 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 16:31:14 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:15:26 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	get_color(char **rgb, t_cub *cub, int *var, int type)
 	}
 	cub->color_check[type] = 1;
 	cub->color[type] = (r << 16) + (g << 8) + b;
-	printf("Color: R:%d G:%d B:%d UINT: %d\n",r, g, b, (r << 16) + (g << 8) + b);
 	*var -= 1;
 	free_matrix(rgb);
 	return (0);
@@ -48,10 +47,7 @@ int	add_fc(char *line, t_cub *cub, int *var, int type)
 	}
 	rgb = ft_split(line + 2, ',');
 	while (rgb[i])
-	{
-		printf("rgb = %s\n", rgb[i]);
 		i++;
-	}
 	if (i != 3)
 	{
 		printf("Error\nInvalid color format: \"%s\"", line + 2);
@@ -74,11 +70,11 @@ int	check_for_var(char *line, t_cub *cub, int *var)
 	}
 	if (check_equal(line, "NO "))
 		return (add_texture(line, cub, var, C_NO));
-	if (check_equal(line, "SO "))
-		return (add_texture(line, cub, var, C_EA));
-	if (check_equal(line, "WE "))
-		return (add_texture(line, cub, var, C_SO));
 	if (check_equal(line, "EA "))
+		return (add_texture(line, cub, var, C_EA));
+	if (check_equal(line, "SO "))
+		return (add_texture(line, cub, var, C_SO));
+	if (check_equal(line, "WE "))
 		return (add_texture(line, cub, var, C_WE));
 	if (check_equal(line, "F "))
 		return (add_fc(line, cub, var, FLOOR));
@@ -88,42 +84,63 @@ int	check_for_var(char *line, t_cub *cub, int *var)
 	return (1);
 }
 
-int	parse_variables(t_cub *cub, int var, int fd)
+int	parse_vars(t_cub *cub, int var, int fd, int *count)
 {
 	char	*line;
-	int		i;
 
 	init_cub(cub);
-	i = 0;
 	while (var)
 	{
 		line = get_map(fd);
-		i++;
+		*count += 1;
 		if (!line)
 		{
 			parse_error(line, cub, "Error\nMap is not correctly configured, ");
 			close(fd);
-			printf("Stopped at line %d\n", i);
+			printf("Stopped at line %d\n", *count);
 			return (1);
 		}
 		if (check_for_var(line, cub, &var))
 		{
 			parse_error(line, cub, NULL);
 			close(fd);
-			return (printf("Stopped at line %d\n", i));
+			return (printf("Stopped at line %d\n", *count));
 		}
 	}
+	close(fd);
+	return (0);
+}
+
+int	parse_map(char *name, t_cub *cub, int count)
+{
+	char	*line;
+	int		fd;
+	int		start;
+
+	(void)cub;
+	fd = open(name, O_RDONLY);
+	printf("count = %d\n", count);
+	while (count)
+		free(get_map(fd));
+	line = get_map(fd);
+	if (line)
+		printf("line = %s\n", line);
+	free(line);
 	return (0);
 }
 
 int	parse_file(int ac, char **av, t_cub *cub)
 {
+	int	count;
+
+	count = 0;
 	if (ac != 2)
 	{
 		printf("Error\nExpected 1 argument recieved: %d\n", ac - 1);
 		return (1);
 	}
-	if (check_name(av[1]) || parse_variables(cub, 6, open(av[1], O_RDONLY)))
+	if (check_name(av[1]) || parse_vars(cub, 6, open(av[1], O_RDONLY), &count) \
+		|| parse_map(av[1], cub, count + 1))
 		return (1);
 	return (0);
 }
