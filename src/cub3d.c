@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:20:45 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/13 18:07:13 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:12:14 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 
 	if (parse_file(ac, av, &cub))
 		return (1);
-	// print_vars(cub);
+	print_vars(cub);
 	for (int i = 0; i < 4; i++)
 	{
 		if (cub.walls[i])

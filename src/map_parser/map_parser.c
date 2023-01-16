@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:16:58 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/13 18:15:26 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:47:57 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,62 @@ int	parse_vars(t_cub *cub, int var, int fd, int *count)
 	return (0);
 }
 
+int	add_matrix(t_cub *cub, char *line)
+{
+	char	**map;
+	int		i;
+
+	i = 0;
+	while (cub->map[i])
+		i++;
+	map = malloc(sizeof(char *) * (i + 2));
+	i = -1;
+	while (cub->map[++i])
+		map[i] = cub->map[i];
+	map[i] = line;
+	free_matrix(cub->map);
+	cub->map = map;
+	return (0);
+}
+
+int	check_line(char *line)
+{
+	int			i;
+	static int	player = 0;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && \
+		line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && line[i] != 'W')
+			return (1);
+	}
+	return (0);
+}
+
 int	parse_map(char *name, t_cub *cub, int count)
 {
 	char	*line;
 	int		fd;
-	int		start;
 
-	(void)cub;
-	fd = open(name, O_RDONLY);
-	printf("count = %d\n", count);
-	while (count)
-		free(get_map(fd));
+	// fd = open(name, O_RDONLY);
+	// printf("count = %d\n", count);
+	// while (count)
+	// 	free(get_map(fd));
 	line = get_map(fd);
-	if (line)
+	while (line)
+	{
+		if (check_line(line))
+		{
+			if (cub->map)
+				free_matrix(cub->map);
+			return (1);
+		}
+		else
+			add_matrix(cub, line);
 		printf("line = %s\n", line);
+		line = get_map(fd);
+	}
 	free(line);
 	return (0);
 }
@@ -139,8 +181,8 @@ int	parse_file(int ac, char **av, t_cub *cub)
 		printf("Error\nExpected 1 argument recieved: %d\n", ac - 1);
 		return (1);
 	}
-	if (check_name(av[1]) || parse_vars(cub, 6, open(av[1], O_RDONLY), &count) \
-		|| parse_map(av[1], cub, count + 1))
+	if (check_name(av[1]) || parse_vars(cub, 6, open(av[1], O_RDONLY), &count)) \
+	//	|| parse_map(av[1], cub, count + 1))
 		return (1);
 	return (0);
 }
