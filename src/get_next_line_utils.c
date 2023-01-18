@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:45:01 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/05/05 14:55:02 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:07:58 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ char	*cpyfrm2(char *str, int start, int end)
 	return (cpy);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char const *str)
 {
 	size_t	i;
 
+	// printf("str = |%s|\n", str);
 	i = 0;
 	if (!str)
 		return (0);
 	while (str[i])
 	{
+		// printf("str[i] = |%c|\n", str[i]);
 		i++;
 	}
 	return (i);

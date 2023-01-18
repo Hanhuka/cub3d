@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:59:13 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/12 16:21:35 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:09:33 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	has_char(char *str, char c)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == c)
 			return (1);
@@ -49,6 +49,9 @@ char	*get_map(int fd)
 		i++;
 	}
 	free(line);
+	i = -1;
+	while (no_nl[++i])
+		;
 	return (no_nl);
 }
 

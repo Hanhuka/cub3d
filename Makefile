@@ -16,30 +16,37 @@ RM			=	rm -f
 
 NAME		=	cub3d
 
-INCLUDE		=	-I ./
+INCLUDE		=	-I ./ minilibx_linux/libmlx_Linux.a
 
 SRCS_		=	cub3d.c \
+				testing_prints.c \
 				get_next_line.c \
 				get_next_line_utils.c \
 				map_parser/map_parser.c \
 				map_parser/map_parser2.c \
+				map_parser/map_parser3.c \
 				map_parser/map_parser_utils.c \
 				map_parser/map_parser_utils2.c \
 				map_parser/map_parser_utils3.c
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
 
-_OBJ		=
+DEPS		=	./minilibx_linux/libmlx_Linux.a
+
 _SRC		=	./src/
+_MLX		=	./minilibx-linux
 
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
-all:		$(NAME)
+all:	$(NAME)
 
 $(_OBJ)%.o: $(_SRC)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
-$(NAME): $(_OBJ) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDE)
+$(NAME): $(DEPS) $(OBJS)
+	$(CC) $(CFLAGS) -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(OBJS) -o $(NAME) $(INCLUDE) -L $(_MLX)
+
+./minilibx_linux/libmlx_Linux.a:
+	make -C minilibx_linux/
 
 #bonus:		$(SRCS_B) $(OBJS_B)
 #			$(CC) $(CFLAGS) $(SRCS_B) -o $(NAME_B)
@@ -52,6 +59,7 @@ clean:
 	$(RM) -r $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME)
+	$(RM) -r $(NAME)
+	$(RM) -r $(_MLX)libmlx_Linux.a
 
 re:	fclean all

@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:16:58 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/16 14:47:57 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:09:25 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,105 +84,53 @@ int	check_for_var(char *line, t_cub *cub, int *var)
 	return (1);
 }
 
-int	parse_vars(t_cub *cub, int var, int fd, int *count)
+int	parse_vars(t_cub *cub, int var, int fd)
 {
 	char	*line;
+	int		count;
 
+	count = 0;
 	init_cub(cub);
 	while (var)
 	{
 		line = get_map(fd);
-		*count += 1;
+		count++;
 		if (!line)
 		{
 			parse_error(line, cub, "Error\nMap is not correctly configured, ");
 			close(fd);
-			printf("Stopped at line %d\n", *count);
+			printf("Stopped at line %d\n", count);
 			return (1);
 		}
 		if (check_for_var(line, cub, &var))
 		{
 			parse_error(line, cub, NULL);
 			close(fd);
-			return (printf("Stopped at line %d\n", *count));
+			return (printf("Stopped at line %d\n", count));
 		}
 	}
-	close(fd);
-	return (0);
-}
-
-int	add_matrix(t_cub *cub, char *line)
-{
-	char	**map;
-	int		i;
-
-	i = 0;
-	while (cub->map[i])
-		i++;
-	map = malloc(sizeof(char *) * (i + 2));
-	i = -1;
-	while (cub->map[++i])
-		map[i] = cub->map[i];
-	map[i] = line;
-	free_matrix(cub->map);
-	cub->map = map;
-	return (0);
-}
-
-int	check_line(char *line)
-{
-	int			i;
-	static int	player = 0;
-
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && \
-		line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && line[i] != 'W')
-			return (1);
-	}
-	return (0);
-}
-
-int	parse_map(char *name, t_cub *cub, int count)
-{
-	char	*line;
-	int		fd;
-
-	// fd = open(name, O_RDONLY);
-	// printf("count = %d\n", count);
-	// while (count)
-	// 	free(get_map(fd));
-	line = get_map(fd);
-	while (line)
-	{
-		if (check_line(line))
-		{
-			if (cub->map)
-				free_matrix(cub->map);
-			return (1);
-		}
-		else
-			add_matrix(cub, line);
-		printf("line = %s\n", line);
-		line = get_map(fd);
-	}
-	free(line);
 	return (0);
 }
 
 int	parse_file(int ac, char **av, t_cub *cub)
 {
-	int	count;
+	int	fd;
 
-	count = 0;
 	if (ac != 2)
 	{
 		printf("Error\nExpected 1 argument recieved: %d\n", ac - 1);
 		return (1);
 	}
-	if (check_name(av[1]) || parse_vars(cub, 6, open(av[1], O_RDONLY), &count)) \
-	//	|| parse_map(av[1], cub, count + 1))
+	if (check_name(av[1]))
 		return (1);
+	fd = open(av[1], O_RDONLY);
+	if (parse_vars(cub, 6, fd))
+		return (1);
+	if (parse_map(cub, fd) || check_map(cub))
+	{
+		free_textures(*cub);
+		return (1);
+	}
+	close(fd);
 	return (0);
 }
