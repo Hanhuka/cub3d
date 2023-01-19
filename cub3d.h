@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/18 17:46:09 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:18:47 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <math.h>
 # include "get_next_line.h"
-# include "minilibx_linux/mlx.h"
+# include "minilibx-linux/mlx.h"
 
 # define CEILING 1
 # define FLOOR 0
@@ -29,6 +30,18 @@
 # define CUB_W 2000
 # define CUB_H 1000
 
+#define MAP_W 1900
+#define MAP_H 900
+#define MAP_C_Y 100
+#define MAP__X 100
+#define MAP_UNIT 50
+
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_ESC 65307
+
 typedef struct s_cub {
 	char				*walls[4];
 	unsigned int		color[2];
@@ -36,6 +49,10 @@ typedef struct s_cub {
 	int					check_f;
 	int					play_x;
 	int					play_y;
+	int					key_w;
+	int					key_a;
+	int					key_s;
+	int					key_d;
 	char				**map;
 	void				*mlx;
 	void				*mlx_w;

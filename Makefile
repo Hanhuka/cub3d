@@ -16,7 +16,7 @@ RM			=	rm -f
 
 NAME		=	cub3d
 
-INCLUDE		=	-I ./ minilibx_linux/libmlx_Linux.a
+INCLUDE		=	-I ./ minilibx-linux/libmlx_Linux.a
 
 SRCS_		=	cub3d.c \
 				testing_prints.c \
@@ -31,7 +31,7 @@ SRCS_		=	cub3d.c \
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
 
-DEPS		=	./minilibx_linux/libmlx_Linux.a
+DEPS		=	./minilibx-linux/libmlx_Linux.a
 
 _SRC		=	./src/
 _MLX		=	./minilibx-linux
