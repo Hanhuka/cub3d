@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:20:45 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/19 15:08:00 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:46:39 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ void	print_minimap_wall(t_cub *cub, int m_x, int m_y)
 		x = m_x;
 		while (x < m_x + MAP_UNIT)
 		{
-			if ((pow(x - cub->play_x + CUB_W / 2 - CUB_W / 2, 2.0) + pow(y - cub->play_y + CUB_H / 2 - CUB_H / 2, 2.0)) <= pow(CUB_H / 2, 2.0))
-				mlx_pixel_put(cub->mlx, cub->mlx_w, x - cub->play_x + CUB_W / 2, y -cub->play_y + CUB_H / 2, 0xFFFFFFFF);
-			x += 1;
+		// 	if ((pow(x - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS, 2.0))
+		// 		mlx_pixel_put(cub->mlx, cub->mlx_w, x - cub->play_x + CUB_W / 2 + R_OFFSET, y - cub->play_y + CUB_H / 2 + R_OFFSET, 0x55550000);
+		// 	if ((pow(x - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS, 2.0))
+		// 		mlx_pixel_put(cub->mlx, cub->mlx_w, x - cub->play_x + CUB_W / 2 + G_OFFSET, y - cub->play_y + CUB_H / 2 + G_OFFSET, 0x55005500);
+		// 	if ((pow(x - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS, 2.0))
+		// 		mlx_pixel_put(cub->mlx, cub->mlx_w, x - cub->play_x + CUB_W / 2 + B_OFFSET, y - cub->play_y + CUB_H / 2 + B_OFFSET, 0x55000055);
+			if ((pow(x - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS, 2.0))
+				mlx_pixel_put(cub->mlx, cub->mlx_w, x - cub->play_x + CUB_W / 2, y - cub->play_y + CUB_H / 2, 0x55FFFFFF);
+			x++;
 		}
-		y += 1;
+		y++;
 	}
 }
 
@@ -46,12 +52,29 @@ void	print_minimap(t_cub *cub)
 		x = 0;
 		while (cub->map[y][x])
 		{
+			// if ((pow(x - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) >= pow(MAP_RADIUS, 2.0) && 
+			// (pow(x * MAP_UNIT - cub->play_x + CUB_W / 2 - MAP_X_CENTER, 2.0) + pow(y * MAP_UNIT - cub->play_y + CUB_H / 2 - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS + 200, 2.0))
+			// 	mlx_pixel_put(cub->mlx, cub->mlx_w, x * MAP_UNIT - cub->play_x + CUB_W / 2, y * MAP_UNIT - cub->play_y + CUB_H / 2, 0xFFFFFFFF);
 			if (cub->map[y][x] == '1')
 				print_minimap_wall(cub, x * MAP_UNIT, y * MAP_UNIT);
 			x++;
 		}
 		y++;
 	}
+	// y = MAP_Y_CENTER - MAP_RADIUS - MAP_OUTLINE;
+	// while (y < MAP_Y_CENTER + MAP_RADIUS + MAP_OUTLINE)
+	// {
+	// 	x = MAP_X_CENTER - MAP_RADIUS - MAP_OUTLINE;
+	// 	while (x < MAP_X_CENTER + MAP_RADIUS + MAP_OUTLINE)
+	// 	{
+	// 		printf("x[%d] y[%d]\n",  x - cub->play_x + CUB_W / 2, y - cub->play_y + CUB_H / 2);
+	// 		if ((pow(x - MAP_X_CENTER, 2.0) + pow(y - MAP_Y_CENTER, 2.0)) >= pow(MAP_RADIUS, 2.0) && 
+	// 		(pow(x - MAP_X_CENTER, 2.0) + pow(y - MAP_Y_CENTER, 2.0)) <= pow(MAP_RADIUS + MAP_OUTLINE, 2.0))
+	// 			mlx_pixel_put(cub->mlx, cub->mlx_w, x, y, 0xFFC500FF);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 }
 
 void	search_player(t_cub *cub)
@@ -90,7 +113,7 @@ int	scuffed_move_down(int key, t_cub *cub)
 	cub->key_a = 0;
 	cub->key_s = 0;
 	cub->key_d = 0;
-	printf("key = %d\n", key);
+	// printf("key = %d\n", key);
 	if (key == KEY_ESC)
 		exit(0);
 	if (key == KEY_W)

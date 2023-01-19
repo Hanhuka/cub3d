@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/19 15:39:05 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:41:27 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@
 #define MAP_H 900
 #define MAP_S_Y 100
 #define MAP_S_X 100
-#define MAP_UNIT 50
+#define MAP_RADIUS 200
+#define MAP_UNIT 10
+#define MAP_X_CENTER 1000
+#define MAP_Y_CENTER 200
+#define MAP_OUTLINE 5
+#define PLAYER_RADIUS 5
+
+#define R_OFFSET 3
+#define G_OFFSET R_OFFSET + R_OFFSET
+#define B_OFFSET G_OFFSET + R_OFFSET
 
 #define KEY_W 119
 #define KEY_A 97
