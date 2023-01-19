@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/19 15:27:41 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:39:05 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <math.h>
 # include "get_next_line.h"
-# include "mlx_linux/mlx.h"
+# include "mlx-linux/mlx.h"
 
 # define CEILING 1
 # define FLOOR 0
