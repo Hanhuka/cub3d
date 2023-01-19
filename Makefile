@@ -16,7 +16,7 @@ RM			=	rm -f
 
 NAME		=	cub3d
 
-INCLUDE		=	-I ./ minilibx-linux/libmlx_Linux.a
+INCLUDE		=	-I ./ mlx_linux/libmlx_Linux.a
 
 SRCS_		=	cub3d.c \
 				testing_prints.c \
@@ -31,10 +31,10 @@ SRCS_		=	cub3d.c \
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
 
-DEPS		=	./minilibx-linux/libmlx_Linux.a
+DEPS		=	./mlx_linux/libmlx_Linux.a
 
 _SRC		=	./src/
-_MLX		=	./minilibx-linux
+_MLX		=	./mlx_inux
 
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
 all:	$(NAME)
@@ -46,7 +46,7 @@ $(NAME): $(DEPS) $(OBJS)
 	$(CC) $(CFLAGS) -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(OBJS) -o $(NAME) $(INCLUDE) -L $(_MLX)
 
 ./minilibx_linux/libmlx_Linux.a:
-	make -C minilibx_linux/
+	make -C mlx_linux/
 
 #bonus:		$(SRCS_B) $(OBJS_B)
 #			$(CC) $(CFLAGS) $(SRCS_B) -o $(NAME_B)
