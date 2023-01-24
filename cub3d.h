@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/19 18:41:27 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:42:17 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,34 @@
 # define C_SO 2
 # define C_WE 3
 
-# define CUB_W 2000
-# define CUB_H 1000
+//Window size: width and height
+# define CUB_W 1920
+//Window size: height
+# define CUB_H 1080
 
-#define MAP_W 1900
-#define MAP_H 900
-#define MAP_S_Y 100
-#define MAP_S_X 100
-#define MAP_RADIUS 200
-#define MAP_UNIT 10
-#define MAP_X_CENTER 1000
-#define MAP_Y_CENTER 200
-#define MAP_OUTLINE 5
-#define PLAYER_RADIUS 5
+//minimap defines
+# define MAP_RADIUS 400
+# define MAP_UNIT 20
 
-#define R_OFFSET 3
-#define G_OFFSET R_OFFSET + R_OFFSET
-#define B_OFFSET G_OFFSET + R_OFFSET
+# define MAP_X_CENTER 960
+# define MAP_Y_CENTER 540
+# define MAP_OUTLINE 5
+# define MAP_OUTL_CLR 0xFFC500FF
+# define PLAYER_RADIUS 5
 
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_ESC 65307
+
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
 
 typedef struct s_cub {
 	char				*walls[4];
@@ -66,6 +71,7 @@ typedef struct s_cub {
 	char				**map;
 	void				*mlx;
 	void				*mlx_w;
+	t_data				map_outline;
 }	t_cub;
 
 //testing_prints.c
@@ -73,6 +79,18 @@ void		print_matrix(char **matrix);
 void		print_vars(t_cub cub);
 
 //cub3d.c
+
+//utils.c
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		create_image(t_cub *cub, t_data *data, int size_x, int size_y);
+
+//print_minimap.c
+void		print_minimap_wall(t_cub *cub, int m_x, int m_y);
+void		print_outline(t_cub *cub);
+void		print_minimap(t_cub *cub);
+
+//minimap_raycasting.c
+void		draw_vector(t_cub *cub, int start_x, int start_y, int dir_x, int dir_y);
 
 //map_parser.c
 int			get_color(char **rgb, t_cub *cub, int *var, int type);

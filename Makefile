@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
 RM			=	rm -f
 
 NAME		=	cub3d
@@ -19,9 +19,12 @@ NAME		=	cub3d
 INCLUDE		=	-I ./ mlx-linux/libmlx_Linux.a
 
 SRCS_		=	cub3d.c \
+				utils.c \
 				testing_prints.c \
-				get_next_line.c \
-				get_next_line_utils.c \
+				gnl/get_next_line.c \
+				gnl/get_next_line_utils.c \
+				minimap/print_minimap.c \
+				minimap/minimap_raycasting.c \
 				map_parser/map_parser.c \
 				map_parser/map_parser2.c \
 				map_parser/map_parser3.c \

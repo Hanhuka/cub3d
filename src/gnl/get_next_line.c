@@ -6,12 +6,12 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 12:41:30 by ralves-g          #+#    #+#             */
-/*   Updated: 2022/05/05 14:55:02 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:14:45 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "../get_next_line.h"
+#include "../../get_next_line.h"
 
 /*char	*till_nl(int fd, char *buf) // SEM STRUCT
 {
