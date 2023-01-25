@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/24 13:42:17 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:17:57 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_R 65363
+# define KEY_L 65361
 # define KEY_ESC 65307
 
 typedef struct s_data {
@@ -61,16 +63,46 @@ typedef struct s_cub {
 	unsigned int		color[2];
 	int					color_check[2];
 	int					check_f;
-	int					play_x;
-	int					play_y;
+	double				play_x;
+	double				play_y;
+
+	double				pdx;//test
+	double				pdy;//
+	double				pa;//
+
+	double				step_x;
+	double				step_y;
+	double				ray_dir_x;
+	double				ray_dir_y;
+	double				dir_x;
+	double				dir_y;
+	double				camera_x;
+	double				camera_y;
+	double				plane_x;
+	double				plane_y;
+	double				time;
+	double				old_time;
+	double				side_dist_x;
+	double				side_dist_y;
+	double				perp_wall_dist;
+	double				delta_dist_x;
+	double				delta_dist_y;
+	int					hit;
+	int					side;
 	int					key_w;
 	int					key_a;
 	int					key_s;
 	int					key_d;
+	int					key_r;
+	int					key_l;
 	int					key_;
 	char				**map;
 	void				*mlx;
 	void				*mlx_w;
+	int					minimap_x;
+	int					minimap_y;
+	int					map_x;
+	int					map_y;
 	t_data				map_outline;
 }	t_cub;
 
@@ -90,7 +122,8 @@ void		print_outline(t_cub *cub);
 void		print_minimap(t_cub *cub);
 
 //minimap_raycasting.c
-void		draw_vector(t_cub *cub, int start_x, int start_y, int dir_x, int dir_y);
+void		draw_vector(t_cub *cub, double start_x, double start_y, double dir_x, double dir_y);
+void		raycasting(t_cub *cub);
 
 //map_parser.c
 int			get_color(char **rgb, t_cub *cub, int *var, int type);
