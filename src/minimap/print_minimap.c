@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:49 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/25 18:15:33 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 12:30:22 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	print_minimap(t_cub *cub)
 	// double test_y = 0.0;
 	// while (test_x >= 0.0)
 	// {
-	draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, (cub->pdx + MAP_X_CENTER) * 20, (cub->pdy + MAP_Y_CENTER) * 20);
+	draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, cub->pdx, cub->pdy);
 	// 	test_x -= 0.01;
 	// 	test_y += 0.01;
 	// }

@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:14:26 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/25 18:13:46 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 12:29:54 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	draw_vector(t_cub *cub, double start_x, double start_y,
 	double	x;
 	double	y;
 
+
+	printf("vector dirX[%f] dirY[%f]\n", dir_x, dir_y);
 	x = start_x;
 	y = start_y;
 	while (x >= 0 && x < CUB_W && y >= 0 && y < CUB_H
@@ -33,6 +35,7 @@ void	draw_vector(t_cub *cub, double start_x, double start_y,
 		mlx_pixel_put(cub->mlx, cub->mlx_w, x, y, 0x00FF0000);
 		x += dir_x;
 		y += dir_y;
+		// printf("Pixel at x[%f] y[%f]\n", x, y);
 	}
 }
 
