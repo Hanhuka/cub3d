@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:20:45 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 14:39:42 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:49:53 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,23 @@ void	give_dir(t_cub *cub, char c)
 	cub->pdx = 0;
 	cub->pdy = 0;
 	if (c == 'N')
-		cub->pdy = -1;
+		cub->pa = -M_PI_2;
 	else if (c == 'S')
-		cub->pdy = 1;
+		cub->pa = M_PI_2;
 	else if (c == 'W')
-		cub->pdx = -1;
+		cub->pa = M_PI;
 	else if (c == 'E')
-		cub->pdx = 1;
+		cub->pa = 0;
+	cub->pdx = cos(cub->pa) * 5;
+	cub->pdy = sin(cub->pa) * 5;
+	// if (c == 'N')
+	// 	cub->pdy = -1;
+	// else if (c == 'S')
+	// 	cub->pdy = 1;
+	// else if (c == 'W')
+	// 	cub->pdx = -1;
+	// else if (c == 'E')
+	// 	cub->pdx = 1;
 }
 
 void	search_player(t_cub *cub)
@@ -65,36 +75,20 @@ void	search_player(t_cub *cub)
 
 void	map_move_player(t_cub *cub, int x, int y)
 {
-	int	dirx;
-	int	diry;
+	double	dirx;
+	double	diry;
 
-	cub->pa += (cub->key_r - cub->key_l) * 0.9;
+	cub->pa += (cub->key_r - cub->key_l) * (10 * (M_PI / 180));
 	if (cub->pa < 0)
 		cub->pa += 2 * M_PI;
 	if (cub->pa > 2 * M_PI)
 		cub->pa -= 2 * M_PI;
 	cub->pdx = cos(cub->pa) * 5;
 	cub->pdy = sin(cub->pa) * 5;
-	printf("pdx = [%f] pdy  = [%f]\n", cub->pdx, cub->pdy);
-
-	if (x == 1)
-		dirx = cub->pdx * cos(M_PI_2) - cub->pdy * sin(M_PI_2);
-	else if (!x)
-		dirx = cub->pdx;
-	else
-		dirx = cub->pdx * cos(-M_PI_2) - cub->pdy * sin(-M_PI_2);
-
-	if (y == 1)
-		diry = cub->pdx * sin(0) + cub->pdy * cos(0);
-	else if (!y)
-		diry = cub->pdy;
-	else
-		diry = cub->pdx * sin(M_PI) + cub->pdy * cos(M_PI);
-
 	if (x == 1 && y == 0)
 	{
-		dirx = cub->pdx * cos(-M_PI_2) - cub->pdy * sin(-M_PI_2);
-		diry = cub->pdx * sin(-M_PI_2) + cub->pdy * cos(-M_PI_2);
+		dirx = cub->pdx * cos(M_PI_2) - cub->pdy * sin(M_PI_2);
+		diry = cub->pdx * sin(M_PI_2) + cub->pdy * cos(M_PI_2);
 	}
 	else if (x == 1 && y == 1)
 	{
@@ -108,38 +102,43 @@ void	map_move_player(t_cub *cub, int x, int y)
 	}
 	else if (x == 0 && y == 1)
 	{
-		dirx = cub->pdx * cos(0) - cub->pdy * sin(0);
-		diry = cub->pdx * sin(0) + cub->pdy * cos(0);
-	}
-		else if (x == 0 && y == -1)
-	{
 		dirx = cub->pdx * cos(M_PI) - cub->pdy * sin(M_PI);
 		diry = cub->pdx * sin(M_PI) + cub->pdy * cos(M_PI);
 	}
+		else if (x == 0 && y == -1)
+	{
+		dirx = cub->pdx * cos(0) - cub->pdy * sin(0);
+		diry = cub->pdx * sin(0) + cub->pdy * cos(0);
+	}
 	else if (x == -1 && y == 0)
 	{
-		dirx = cub->pdx * cos(M_PI_2) - cub->pdy * sin(M_PI_2);
-		diry = cub->pdx * sin(M_PI_2) + cub->pdy * cos(M_PI_2);
+		dirx = cub->pdx * cos(-M_PI_2) - cub->pdy * sin(-M_PI_2);
+		diry = cub->pdx * sin(-M_PI_2) + cub->pdy * cos(-M_PI_2);
 	}
 	else if (x == -1 && y == 1)
 	{
 		dirx = cub->pdx * cos(M_PI_4) - cub->pdy * sin(M_PI_4);
 		diry = cub->pdx * sin(M_PI_4) + cub->pdy * cos(M_PI_4);
 	}
-	else if (x == -1 && y == -1)
+	else
 	{
 		dirx = cub->pdx * cos(M_PI + M_PI_4) - cub->pdy * sin(M_PI + M_PI_4);
 		diry = cub->pdx * sin(M_PI + M_PI_4) + cub->pdy * cos(M_PI + M_PI_4);
 	}
-
-	cub->play_x += 0.5;
-	cub->play_y += 0.5;
+	// cub->play_x += 0.5;
+	// cub->play_y += 0.5;
 	// cub->minimap_x += cub->pdx;
 	// cub->minimap_y += cub->pdy;
-	cub->minimap_x += dirx;
-	cub->minimap_y += diry;
-	cub->step_x = x;
-	cub->step_y = y;
+	if (x || y)
+	{
+	// printf("Dir x[%f]y[%f]\n", dirx, diry);
+	// printf("Old pos x[%f]y[%f]\n", cub->minimap_x, cub->minimap_y);
+		cub->minimap_x += dirx * SPEED;
+		cub->minimap_y += diry * SPEED;
+	// printf("New pos x[%f]y[%f]\n", cub->minimap_x, cub->minimap_y);
+	}
+	// cub->step_x = x;
+	// cub->step_y = y;
 }
 
 int	scuffed_move_down(int key, t_cub *cub)
@@ -150,7 +149,7 @@ int	scuffed_move_down(int key, t_cub *cub)
 	cub->key_d = 0;
 	cub->key_r = 0;
 	cub->key_l = 0;
-	printf("key = %d\n", key);
+	// printf("key = %d\n", key);
 	if (key == KEY_ESC)
 		exit(0);
 	if (key == KEY_W)
@@ -166,7 +165,7 @@ int	scuffed_move_down(int key, t_cub *cub)
 	if (key == KEY_L)
 		cub->key_l = 1;
 	map_move_player(cub, cub->key_d - cub->key_a, cub->key_s - cub->key_w);
-	mlx_clear_window(cub->mlx, cub->mlx_w);
+	// mlx_clear_window(cub->mlx, cub->mlx_w);
 	print_minimap(cub);
 	// raycasting(cub);
 	mlx_destroy_image(cub->mlx, cub->map_outline.img);

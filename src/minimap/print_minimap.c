@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:49 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 12:30:22 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:05:45 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,14 @@ void	print_minimap(t_cub *cub)
 		}
 	}
 	print_outline(cub);
+	mlx_clear_window(cub->mlx, cub->mlx_w);
 	mlx_put_image_to_window(cub->mlx, cub->mlx_w, cub->map_outline.img, 0, 0);
 	// mlx_destroy_image(cub->mlx, cub->map_outline.img);
 	// double test_x = 1.0;
 	// double test_y = 0.0;
 	// while (test_x >= 0.0)
 	// {
-	draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, cub->pdx, cub->pdy);
+	draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, cub->pdx, cub->pdy, MAP_RADIUS / 2);
 	// 	test_x -= 0.01;
 	// 	test_y += 0.01;
 	// }

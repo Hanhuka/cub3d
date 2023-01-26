@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:14:26 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 12:29:54 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:10:16 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,95 @@
 // y1 = x0 * sin(a) + y0 * cos(a)
 
 void	draw_vector(t_cub *cub, double start_x, double start_y,
-		double dir_x, double dir_y)
+		double dir_x, double dir_y, double max_size)
 {
 	double	x;
 	double	y;
 
 
-	printf("vector dirX[%f] dirY[%f]\n", dir_x, dir_y);
+	// printf("vector dirX[%f] dirY[%f]\n", dir_x, dir_y);
 	x = start_x;
 	y = start_y;
 	while (x >= 0 && x < CUB_W && y >= 0 && y < CUB_H
 		&& (start_x - x) * (start_x - x) + (start_y - y) * (start_y - y)
-		<= MAP_RADIUS * MAP_RADIUS)
+		<= max_size * max_size)
 	{
 		mlx_pixel_put(cub->mlx, cub->mlx_w, x, y, 0x00FF0000);
-		x += dir_x;
-		y += dir_y;
+		x += dir_x / 10.0;
+		y += dir_y / 10.0;
 		// printf("Pixel at x[%f] y[%f]\n", x, y);
 	}
 }
+
+void	draw_rays_3d(t_cub *cub)
+{
+	t_rays rays;
+	rays.ra = cub.pa;
+	rays.r = 0;
+	while (rays.r < 1)
+	{
+		rays.a_tan = -1/tan(rays.ra);
+		if (rays.ra > M_PI)
+		{
+			rays.ry = (((int)cub->minimap_y>>6)<<6) - 0.0001;
+			rays.rx = (cub->minimap_y - ry) * rays.a_tan + px;
+			rays.yo = -64;
+			rays.xo = -rays.yo * rays.a_tan;
+		}
+		if (rays.ra > M_PI)
+		{
+			rays.ry = (((int)cub->minimap_y>>6)<<6) + 64;
+			rays.rx = (cub->minimap_y - ry) * rays.a_tan + px;
+			rays.yo = 64;
+			rays.xo = -rays.yo * rays.a_tan;
+		}
+		if (rays.ra == 0 || rays.ra == M_PI)
+		{
+			rays.rx = cub->minimap_x;
+			rays.ry = cub->minimap_y;
+			rays.dof = 8;
+		}
+		while (dof < 8)
+		{
+			rays.mx = (int)(rays.rx) >> 6;
+			rays.my = (int) (rays.ry) >> 6;
+			rays.mp = rays.my * 
+		}
+		r++;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void	rc_initvals(t_cub *cub, int *x)
 {

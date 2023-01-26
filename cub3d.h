@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/25 18:17:57 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:57:05 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@
 # define MAP_OUTL_CLR 0xFFC500FF
 # define PLAYER_RADIUS 5
 
+// # define MAP_RADIUS 200
+// # define MAP_UNIT 10
+// # define MAP_X_CENTER 1500
+// # define MAP_Y_CENTER 600
+// # define MAP_OUTLINE 5
+// # define MAP_OUTL_CLR 0xFFC500FF
+// # define PLAYER_RADIUS 5
+
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
@@ -49,6 +57,24 @@
 # define KEY_R 65363
 # define KEY_L 65361
 # define KEY_ESC 65307
+# define SPEED 1
+
+typedef struct s_rays
+{
+	int		r;
+	int		mx;
+	int		my;
+	int		mp;
+	int		dof;
+	double	rx;
+	double	ry;
+	double	ra;
+	double	xo;
+	double	yo;
+	double	a_tan;
+	
+}	t_rays;
+
 
 typedef struct s_data {
 	void	*img;
@@ -99,8 +125,8 @@ typedef struct s_cub {
 	char				**map;
 	void				*mlx;
 	void				*mlx_w;
-	int					minimap_x;
-	int					minimap_y;
+	double				minimap_x;
+	double				minimap_y;
 	int					map_x;
 	int					map_y;
 	t_data				map_outline;
@@ -122,7 +148,7 @@ void		print_outline(t_cub *cub);
 void		print_minimap(t_cub *cub);
 
 //minimap_raycasting.c
-void		draw_vector(t_cub *cub, double start_x, double start_y, double dir_x, double dir_y);
+void	draw_vector(t_cub *cub, double start_x, double start_y,double dir_x, double dir_y, double max_size);
 void		raycasting(t_cub *cub);
 
 //map_parser.c
