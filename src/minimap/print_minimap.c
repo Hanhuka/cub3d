@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:49 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 17:05:45 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:54:24 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,22 @@ void	print_minimap_wall(t_cub *cub, int m_x, int m_y)
 
 void	print_outline(t_cub *cub)
 {
+	(void)cub;
 	int	y;
 	int	x;
 	int	test;
 
-	y = MAP_Y_CENTER - MAP_RADIUS - 1;
-	while (++y < MAP_Y_CENTER + MAP_RADIUS)
-	{
-		x = MAP_X_CENTER - MAP_RADIUS - 1;
-		while (++x < MAP_X_CENTER + MAP_RADIUS)
-		{
-			if (((x - MAP_X_CENTER) * (x - MAP_X_CENTER) + (y - MAP_Y_CENTER)
-					* (y - MAP_Y_CENTER)) <= MAP_OUTLINE * MAP_OUTLINE)
-				my_mlx_pixel_put(&(cub->map_outline), x, y, MAP_OUTL_CLR);
-		}
-	}
+	// y = MAP_Y_CENTER - MAP_RADIUS - 1;
+	// while (++y < MAP_Y_CENTER + MAP_RADIUS)
+	// {
+	// 	x = MAP_X_CENTER - MAP_RADIUS - 1;
+	// 	while (++x < MAP_X_CENTER + MAP_RADIUS)
+	// 	{
+	// 		if (((x - MAP_X_CENTER) * (x - MAP_X_CENTER) + (y - MAP_Y_CENTER)
+	// 				* (y - MAP_Y_CENTER)) <= MAP_OUTLINE * MAP_OUTLINE)
+	// 			my_mlx_pixel_put(&(cub->map_outline), x, y, MAP_OUTL_CLR);
+	// 	}
+	// }
 	y = MAP_Y_CENTER - MAP_RADIUS - MAP_OUTLINE;
 	while (y < MAP_Y_CENTER + MAP_RADIUS + MAP_OUTLINE)
 	{
@@ -82,7 +83,7 @@ void	print_minimap(t_cub *cub)
 	int	y;
 	int	x;
 
-	create_image(cub, &cub->map_outline, CUB_W, CUB_H);
+	// create_image(cub, &cub->map_outline, CUB_W, CUB_H);
 	y = -1;
 	while (cub->map[++y])
 	{
@@ -91,26 +92,15 @@ void	print_minimap(t_cub *cub)
 			if (cub->map[y][x] == '1')
 				print_minimap_wall(cub, x * MAP_UNIT, y * MAP_UNIT);
 	}
-	y = MAP_Y_CENTER - MAP_RADIUS - 1;
-	while (++y < MAP_Y_CENTER + MAP_RADIUS)
-	{
-		x = MAP_X_CENTER - MAP_RADIUS - 1;
-		while (++x < MAP_X_CENTER + MAP_RADIUS)
-		{
-			if (((x - MAP_X_CENTER) * (x - MAP_X_CENTER) + (y - MAP_Y_CENTER)
-					* (y - MAP_Y_CENTER)) <= MAP_OUTLINE * MAP_OUTLINE)
-				my_mlx_pixel_put(&cub->map_outline, x , y, 0xFFC500FF);
-		}
-	}
 	print_outline(cub);
-	mlx_clear_window(cub->mlx, cub->mlx_w);
-	mlx_put_image_to_window(cub->mlx, cub->mlx_w, cub->map_outline.img, 0, 0);
+	// mlx_clear_window(cub->mlx, cub->mlx_w);
+	// mlx_put_image_to_window(cub->mlx, cub->mlx_w, cub->map_outline.img, 0, 0);
 	// mlx_destroy_image(cub->mlx, cub->map_outline.img);
 	// double test_x = 1.0;
 	// double test_y = 0.0;
 	// while (test_x >= 0.0)
 	// {
-	draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, cub->pdx, cub->pdy, MAP_RADIUS / 2);
+	// draw_vector(cub, MAP_X_CENTER, MAP_Y_CENTER, cub->pdx, cub->pdy, MAP_RADIUS / 2);
 	// 	test_x -= 0.01;
 	// 	test_y += 0.01;
 	// }

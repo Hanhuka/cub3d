@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:20:45 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 17:49:53 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:45:58 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,24 @@ void	map_move_player(t_cub *cub, int x, int y)
 	double	dirx;
 	double	diry;
 
+	if (cub->key_r - cub->key_l == 1)
+	{
+		cub->old_dir_x = cub->dir_x;
+		cub->dir_x = cub->dir_x * cos(-cub->rot_speed) - cub->dir_y * sin(-cub->rot_speed);
+		cub->dir_y = cub->old_dir_x * sin(-cub->rot_speed) + cub->dir_y * cos(-cub->rot_speed);
+		cub->old_plane_x = cub->plane_x;
+		cub->plane_x = cub->plane_x * cos(-cub->rot_speed) - cub->plane_x * sin(-cub->rot_speed);
+		cub->plane_y = cub->old_plane_x * sin(-cub->rot_speed) + cub->plane_y * cos(-cub->rot_speed);
+	}
+	else if (cub->key_r - cub->key_l == -1)
+	{
+		cub->old_dir_x = cub->dir_x;
+		cub->dir_x = cub->dir_x * cos(cub->rot_speed) - cub->dir_y * sin(cub->rot_speed);
+		cub->dir_y = cub->old_dir_x * sin(cub->rot_speed) + cub->dir_y * cos(cub->rot_speed);
+		cub->old_plane_x = cub->plane_x;
+		cub->plane_x = cub->plane_x * cos(cub->rot_speed) - cub->plane_x * sin(cub->rot_speed);
+		cub->plane_y = cub->old_plane_x * sin(cub->rot_speed) + cub->plane_y * cos(cub->rot_speed);
+	}
 	cub->pa += (cub->key_r - cub->key_l) * (10 * (M_PI / 180));
 	if (cub->pa < 0)
 		cub->pa += 2 * M_PI;
@@ -137,8 +155,8 @@ void	map_move_player(t_cub *cub, int x, int y)
 		cub->minimap_y += diry * SPEED;
 	// printf("New pos x[%f]y[%f]\n", cub->minimap_x, cub->minimap_y);
 	}
-	// cub->step_x = x;
-	// cub->step_y = y;
+	cub->step_x = x;
+	cub->step_y = y;
 }
 
 int	scuffed_move_down(int key, t_cub *cub)
@@ -166,8 +184,11 @@ int	scuffed_move_down(int key, t_cub *cub)
 		cub->key_l = 1;
 	map_move_player(cub, cub->key_d - cub->key_a, cub->key_s - cub->key_w);
 	// mlx_clear_window(cub->mlx, cub->mlx_w);
+	create_image(cub, &cub->map_outline, CUB_W, CUB_H);
+	raycasting(cub);
 	print_minimap(cub);
-	// raycasting(cub);
+	mlx_clear_window(cub->mlx, cub->mlx_w);
+	mlx_put_image_to_window(cub->mlx, cub->mlx_w, cub->map_outline.img, 0, 0);
 	mlx_destroy_image(cub->mlx, cub->map_outline.img);
 	return (0);
 }
@@ -192,15 +213,22 @@ void	init_mlx(t_cub *cub)
 	cub->key_s = 0;
 	cub->key_d = 0;
 
+	
 	cub->plane_x = 0;
 	cub->plane_y = 0.66;
 	cub->time = 0;
 	cub->old_time = 0;
+	cub->rot_speed = 0.1;
 
 	cub->mlx = mlx_init();
 	cub->mlx_w = mlx_new_window(cub->mlx, CUB_W, CUB_H, "Cub3d");
 	search_player(cub);
+	create_image(cub, &cub->map_outline, CUB_W, CUB_H);
+	raycasting(cub);
 	print_minimap(cub);
+	mlx_clear_window(cub->mlx, cub->mlx_w);
+	mlx_put_image_to_window(cub->mlx, cub->mlx_w, cub->map_outline.img, 0, 0);
+	mlx_destroy_image(cub->mlx, cub->map_outline.img);
 	mlx_hook(cub->mlx_w, 2, 1, scuffed_move_down, cub);
 	mlx_hook(cub->mlx_w, 3, 1, scuffed_move_up, cub);
 	mlx_loop(cub->mlx);

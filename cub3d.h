@@ -6,7 +6,7 @@
 /*   By: ralves-g <ralves-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:17:31 by ralves-g          #+#    #+#             */
-/*   Updated: 2023/01/26 17:57:05 by ralves-g         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:47:10 by ralves-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 //minimap defines
 # define MAP_RADIUS 400
-# define MAP_UNIT 20
+# define MAP_UNIT 30
 
 # define MAP_X_CENTER 960
 # define MAP_Y_CENTER 540
@@ -45,7 +45,7 @@
 // # define MAP_RADIUS 200
 // # define MAP_UNIT 10
 // # define MAP_X_CENTER 1500
-// # define MAP_Y_CENTER 600
+// # define MAP_Y_CENTER 300
 // # define MAP_OUTLINE 5
 // # define MAP_OUTL_CLR 0xFFC500FF
 // # define PLAYER_RADIUS 5
@@ -113,6 +113,15 @@ typedef struct s_cub {
 	double				perp_wall_dist;
 	double				delta_dist_x;
 	double				delta_dist_y;
+	double				old_dir_x;
+	double				old_dir_y;
+	double				old_plane_x;
+	double				rot_speed;
+	double				wall_x;
+	double				eu;
+	int					line_height;
+	int					draw_start;
+	int					draw_end;
 	int					hit;
 	int					side;
 	int					key_w;
@@ -148,7 +157,7 @@ void		print_outline(t_cub *cub);
 void		print_minimap(t_cub *cub);
 
 //minimap_raycasting.c
-void	draw_vector(t_cub *cub, double start_x, double start_y,double dir_x, double dir_y, double max_size);
+void		draw_vector(t_cub *cub, double start_x, double start_y,double dir_x, double dir_y, double max_size);
 void		raycasting(t_cub *cub);
 
 //map_parser.c
